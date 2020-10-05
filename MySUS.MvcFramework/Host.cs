@@ -1,8 +1,6 @@
-﻿using MySUS.HTTP;
-using System;
+﻿
+using MySUS.HTTP;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MySUS.MvcFramework
@@ -11,12 +9,8 @@ namespace MySUS.MvcFramework
     {
         public static async Task CreateHostAsync(List<Route> routingTable, int port=80)
         {
-            IHttpServer server = new HttpServer();
+            IHttpServer server = new HttpServer(routingTable);
 
-            foreach (var route in routingTable)
-            {
-                server.AddRoute(route.Path, route.Action);
-            }
             await server.StartAsync(port);
         }
     }
