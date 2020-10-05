@@ -2,6 +2,7 @@
 using MySUS.MvcFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace MyFirstMvcAPP.Controllers
@@ -10,18 +11,12 @@ namespace MyFirstMvcAPP.Controllers
     {
         public HttpResponse Login(HttpRequest request)
         {
-            var responseHtml = "<h1>Login ...</h1>";
-            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
-            var response = new HttpResponse(responseBodyBytes, "text/html");
-            return response;
+            return this.View("Views/Users/Login.html");
         }
 
         public HttpResponse Register(HttpRequest request)
         {
-            var responseHtml = "<h1>Register ...</h1>";
-            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
-            var response = new HttpResponse(responseBodyBytes, "text/html");
-            return response;
+            return this.View("Views/Users/Register.html");            
         }
     }
 }
