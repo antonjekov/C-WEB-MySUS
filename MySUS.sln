@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySUS.HTTP", "MySUS.HTTP\MySUS.HTTP.csproj", "{7B4133EE-D714-4959-83CD-304EEF787FF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySUS.HTTP", "MySUS.HTTP\MySUS.HTTP.csproj", "{7B4133EE-D714-4959-83CD-304EEF787FF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySUS.MvcFramework", "MySUS.MvcFramework\MySUS.MvcFramework.csproj", "{7866B122-5945-49E4-AD8C-665333ADA058}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySUS.MvcFramework", "MySUS.MvcFramework\MySUS.MvcFramework.csproj", "{7866B122-5945-49E4-AD8C-665333ADA058}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{46518F3C-B30F-4170-A972-251DCCCE53D3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFirstMvcAPP", "Apps\MyFirstMvcAPP\MyFirstMvcAPP.csproj", "{9DFA8723-92B7-4637-B677-2977C20E2AF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySUS.MvcFramework.Tests", "MySUS.MvcFramework.Tests\MySUS.MvcFramework.Tests.csproj", "{322720C9-2D29-40B6-B874-8365906E5F2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{9DFA8723-92B7-4637-B677-2977C20E2AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DFA8723-92B7-4637-B677-2977C20E2AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DFA8723-92B7-4637-B677-2977C20E2AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{322720C9-2D29-40B6-B874-8365906E5F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{322720C9-2D29-40B6-B874-8365906E5F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{322720C9-2D29-40B6-B874-8365906E5F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{322720C9-2D29-40B6-B874-8365906E5F2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

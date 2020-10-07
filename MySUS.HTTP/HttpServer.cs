@@ -65,7 +65,7 @@ namespace MySUS.HTTP
 
                     //RESPONSE
                     HttpResponse response;
-                    var route = routeTable.FirstOrDefault(r => r.Path == httpRequest.Path);
+                    var route = routeTable.FirstOrDefault(r => string.Compare(r.Path, httpRequest.Path, true)==0&& r.Method==httpRequest.Method);
                     if (route!=null)
                     {
                         response = route.Action(httpRequest);
