@@ -7,8 +7,11 @@ namespace MySUS.MvcFramework
 {
     public static class Host
     {
-        public static async Task CreateHostAsync(List<Route> routingTable, int port=80)
+        public static async Task CreateHostAsync(IMvcApplication application, int port=80)
         {
+            List<Route> routingTable = new List<Route>();
+            application.ConfigureServices();
+            application.Configure(routingTable);
             IHttpServer server = new HttpServer(routingTable);
 
             await server.StartAsync(port);
