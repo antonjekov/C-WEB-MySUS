@@ -39,7 +39,7 @@ namespace MySUS.MvcFramework.ViewEngine
                                             var html = new StringBuilder();"
                                             + GetMethodBody(templateCode) +
                                             @"
-                                            return html.ToString().TrimEnd();
+                                            return html.ToString().Trim();
                                         }
                                     }
                                 }
