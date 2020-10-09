@@ -1,5 +1,6 @@
 using MySUS.MvcFramework.ViewEngine;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
@@ -28,13 +29,18 @@ namespace MySUS.MvcFramework.Tests
             Assert.Equal(expected, result);
         }
 
-        public class TestViewModel
+        [Fact]
+        public void TestTemplateViewMode()
         {
-            public string Name { get; set; }
-
-            public DateTime DateOfBirth { get; set; }
-
-            public decimal Price { get; set; }
+            IViewEngine viewEngine = new SusViewEngine();
+            var result = viewEngine.GetHtml(@"@foreach(var num in Model)
+{
+<span>@num</span>
+}", new List<int>() { 1,2,3});
+            var expected = @"<span>1</span>
+<span>2</span>
+<span>3</span>";
+            Assert.Equal(expected, result);
         }
     }
 }

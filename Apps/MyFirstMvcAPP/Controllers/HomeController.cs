@@ -1,4 +1,5 @@
-﻿using MySUS.HTTP;
+﻿using MyFirstMvcAPP.ViewModels;
+using MySUS.HTTP;
 using MySUS.MvcFramework;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,10 @@ namespace MyFirstMvcAPP.Controllers
     {
         public HttpResponse Index(HttpRequest request)
         {
-            return this.View();
+            var viewModel = new IndexViewModel();
+            viewModel.CurrentYear = DateTime.UtcNow.Year;
+            viewModel.Message = "Welcome to Battle Cards";
+            return this.View(viewModel);
         }
 
         

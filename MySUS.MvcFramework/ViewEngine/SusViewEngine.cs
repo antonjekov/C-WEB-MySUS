@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -15,14 +16,30 @@ namespace MySUS.MvcFramework.ViewEngine
     {
         public string GetHtml(string templateCode, object viewModel)
         {
-            string cSharpCode = GenerateCSharpFromTemplate(templateCode);
+            string cSharpCode = GenerateCSharpFromTemplate(templateCode, viewModel);
             IView executableObject = GenerateExecutableCode(cSharpCode, viewModel);
             string html = executableObject.ExecuteTemplate(viewModel);
             return html;
         }
 
-        private string GenerateCSharpFromTemplate(string templateCode)
+        private string GenerateCSharpFromTemplate(string templateCode, object viewModel)
         {
+            string typeOfModel = "object";
+            if (viewModel != null)
+            {
+                if (viewModel.GetType().IsGenericType)
+                {
+                    var modelName = viewModel.GetType().FullName;
+                    var genericArguments = viewModel.GetType().GenericTypeArguments;
+                    typeOfModel = modelName.Substring(0, modelName.IndexOf('`'));
+                    typeOfModel= typeOfModel + "<" + string.Join(",",genericArguments.Select(x=>x.FullName)) + ">";
+
+                }
+                else
+                {
+                    typeOfModel = viewModel.GetType().FullName;
+                }
+            }
             string cSharpCode = @"
                                 using System;
                                 using System.Collections.Generic;
@@ -36,6 +53,7 @@ namespace MySUS.MvcFramework.ViewEngine
                                     {
                                         public string ExecuteTemplate(object viewModel)
                                         {
+                                            var Model = viewModel as " + typeOfModel + @";
                                             var html = new StringBuilder();"
                                             + GetMethodBody(templateCode) +
                                             @"
@@ -78,7 +96,7 @@ namespace MySUS.MvcFramework.ViewEngine
                         var lineAfterAtSign = line.Substring(atSignLocation + 1);
                         var code = cSharpCodeRegex.Match(lineAfterAtSign).Value;
                         cSharpCode.Append(code + " + @\"");
-                        line = line.Substring(lineAfterAtSign.Length);
+                        line = lineAfterAtSign.Substring(code.Length);
                     }
                     cSharpCode.AppendLine(line.Replace("\"", "\"\"") + "\");");
                 }
