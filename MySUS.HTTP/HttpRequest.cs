@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
@@ -31,8 +32,9 @@ namespace MySUS.HTTP
         {
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
+            this.FormData = new Dictionary<string, string>();
 
-            var lines = requestString.Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = requestString.Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
 
             //GET /assets/css/money.css? _ = 1549445024 HTTP/1.1
             var headerLine = lines[0];
@@ -78,6 +80,19 @@ namespace MySUS.HTTP
                 }
             }
             this.Body = bodyLines.ToString();
+            var parameters = this.Body.Split(new string[] { "&"},StringSplitOptions.RemoveEmptyEntries);
+            foreach (var parameter in parameters)
+            {
+                var parameterParts = parameter.Split('=');
+                var name = parameterParts[0];
+                var value = WebUtility.UrlDecode(parameterParts[1]);
+                if (this.FormData.ContainsKey(name))
+                {
+                    this.FormData[name] = value;
+                    continue;
+                }
+                this.FormData.Add(name, value);
+            }
         }
 
         public string Path { get; set; }
@@ -89,5 +104,7 @@ namespace MySUS.HTTP
         public ICollection<Header> Headers { get; set; }
 
         public ICollection<Cookie> Cookies { get; set; }
+
+        public IDictionary<string, string> FormData { get; set; }
     }
 }
