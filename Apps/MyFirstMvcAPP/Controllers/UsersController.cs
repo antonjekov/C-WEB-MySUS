@@ -9,17 +9,18 @@ namespace MyFirstMvcAPP.Controllers
 {
     public class UsersController: Controller
     {
-        public HttpResponse Login(HttpRequest request)
+        public HttpResponse Login()
         {
             return this.View();
         }
 
-        public HttpResponse Register(HttpRequest request)
+        public HttpResponse Register()
         {
             return this.View();            
         }
 
-        public HttpResponse DoLogin(HttpRequest request)
+        [HttpPost("/users/login")]
+        public HttpResponse DoLogin()
         {
             //read data
             //check user

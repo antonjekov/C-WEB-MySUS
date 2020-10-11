@@ -32,7 +32,7 @@ namespace MySUS.HTTP
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
 
-            var lines = requestString.Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
+            var lines = requestString.Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
             //GET /assets/css/money.css? _ = 1549445024 HTTP/1.1
             var headerLine = lines[0];
