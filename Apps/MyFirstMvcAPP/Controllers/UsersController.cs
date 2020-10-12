@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace MyFirstMvcAPP.Controllers
+namespace BattleCards.Controllers
 {
     public class UsersController: Controller
     {
