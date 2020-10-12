@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySUS.MvcFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -11,26 +12,13 @@ namespace BattleCards.Data
 //•	Has a Password – a string with min length 6 and max length 20  - hashed in the database(required)
 //•	Has UserCard collection
 
-    public class User
+    public class User : UserIdentity
     {
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Cards = new HashSet<UserCard>();
         }
-
-        [Key]
-        public string Id { get; set; }
-
-        [Required]
-        [MaxLength(20)]
-        public string Username { get; set; }
-
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string Password { get; set; }
 
         public virtual ICollection<UserCard> Cards { get; set; }
     }

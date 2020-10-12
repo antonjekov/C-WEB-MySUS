@@ -21,6 +21,7 @@ namespace BattleCards.Controllers
 
         public HttpResponse About()
         {
+            this.Request.Session["about"] = "yes";
            return this.View();
         }
     }

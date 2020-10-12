@@ -77,7 +77,13 @@ namespace MySUS.HTTP
                     }
 
                     response.Headers.Add(new Header("Server", "MySUSServer 1.0"));
-                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
+                    var sessionCookie = httpRequest.Cookies.FirstOrDefault(cookie => cookie.Name == HttpConstants.SessionCookieName);
+                    if (sessionCookie!=null)
+                    {
+                        var responceSessionCookie = new ResponseCookie(sessionCookie.Name, sessionCookie.Value);
+                        responceSessionCookie.Path = "/";
+                        response.Cookies.Add(responceSessionCookie);
+                    }
 
                     var responseHeaderHttpBytes = Encoding.UTF8.GetBytes(response.ToString());
 

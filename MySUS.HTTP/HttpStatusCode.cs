@@ -12,6 +12,6 @@ namespace MySUS.HTTP
         TemporaryRedirect = 307,
         NotFound = 404,
         ServerError = 500,
-
+        UnprocessableEntity = 422
     }
 }
