@@ -4,10 +4,8 @@ using System.Text;
 
 namespace BattleCards.ViewModels
 {
-    public class DoAddViewModel
+    public class AllCardsViewModel
     {
-        public int Attack { get; set; }
-
-        public int Health { get; set; }
+        public List<CardViewModel> Cards { get; set; }
     }
 }
