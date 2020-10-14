@@ -13,7 +13,7 @@ namespace BattleCards.Controllers
     {
         public HttpResponse Add()
         {
-            if (this.IsUserSignedIn())
+            if (!this.IsUserSignedIn())
             {
                 return this.Redirect("/users/login");
             }
@@ -48,7 +48,7 @@ namespace BattleCards.Controllers
 
         public HttpResponse All()
         {
-            if (this.IsUserSignedIn())
+            if (!this.IsUserSignedIn())
             {
                 return this.Redirect("/users/login");
             }
@@ -68,7 +68,7 @@ namespace BattleCards.Controllers
 
         public HttpResponse Collection()
         {
-            if (this.IsUserSignedIn())
+            if (!this.IsUserSignedIn())
             {
                 return this.Redirect("/users/login");
             }
