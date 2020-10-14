@@ -40,7 +40,7 @@ namespace BattleCards.Controllers
             //log user
             this.SignIn(user);            
             //redirect
-            return this.Redirect("/");
+            return this.Redirect("/cards/all");
         }
 
         public HttpResponse Register()
