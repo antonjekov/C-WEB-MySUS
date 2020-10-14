@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MySUS.MvcFramework
 {
-    public class UserIdentity
+    public class IdentityUser<T>
     {
         [Key]
-        public string Id { get; set; }
+        public T Id { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -19,5 +19,7 @@ namespace MySUS.MvcFramework
 
         [Required]
         public string Password { get; set; }
+
+        public IdentityRole Role { get; set; }
     }
 }

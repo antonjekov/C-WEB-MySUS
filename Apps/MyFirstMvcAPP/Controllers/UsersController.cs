@@ -14,11 +14,6 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
-        public HttpResponse Register()
-        {
-            return this.View();            
-        }
-
         [HttpPost("/users/login")]
         public HttpResponse DoLogin()
         {
@@ -27,6 +22,35 @@ namespace BattleCards.Controllers
             //log user
             //redirect
             return this.Redirect("/");
+        }
+
+        public HttpResponse Register()
+        {
+            return this.View();            
+        }
+
+        [HttpPost("/users/register")]
+        public HttpResponse DoRegister()
+        {
+            //read data
+            //check user
+            //log user
+            //redirect
+            return this.Redirect("/");
+        }
+
+        // /users/logout
+        public HttpResponse Logout()
+        {
+            if (this.IsUserSignedIn())
+            {
+            this.SignOut();
+            return this.Redirect("/");
+            }
+            else
+            {
+                return this.Error("Only signed in users can logout.");
+            }
         }
     }
 }
