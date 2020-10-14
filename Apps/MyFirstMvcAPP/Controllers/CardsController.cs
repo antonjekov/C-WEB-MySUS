@@ -62,7 +62,7 @@ namespace BattleCards.Controllers
                 Name=x.Name
             }).ToList() ;
 
-            return this.View(new AllCardsViewModel { Cards= cardsViewModel });
+            return this.View(cardsViewModel);
         }
 
         public HttpResponse Collection()

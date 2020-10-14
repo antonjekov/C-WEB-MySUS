@@ -12,12 +12,13 @@ namespace BattleCards.Data
 //•	Has a Password – a string with min length 6 and max length 20  - hashed in the database(required)
 //•	Has UserCard collection
 
-    public class User : UserIdentity
+    public class User : IdentityUser<string>
     {
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Cards = new HashSet<UserCard>();
+            this.Role = IdentityRole.User;
         }
 
         public virtual ICollection<UserCard> Cards { get; set; }
