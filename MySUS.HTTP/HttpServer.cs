@@ -88,7 +88,11 @@ namespace MySUS.HTTP
                     var responseHeaderHttpBytes = Encoding.UTF8.GetBytes(response.ToString());
 
                     await stream.WriteAsync(responseHeaderHttpBytes, 0, responseHeaderHttpBytes.Length);
+                    if (response.Body!=null)
+                    {
                     await stream.WriteAsync(response.Body, 0, response.Body.Length);
+
+                    }
 
                 }
                 tcpClient.Close();
