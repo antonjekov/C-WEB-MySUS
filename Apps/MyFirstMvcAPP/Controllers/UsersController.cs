@@ -13,11 +13,11 @@ namespace BattleCards.Controllers
 {
     public class UsersController: Controller
     {
-        private UsersService usersService;
+        private IUsersService usersService;
 
-        public UsersController()
+        public UsersController(IUsersService usersService)
         {
-            this.usersService = new UsersService();
+            this.usersService = usersService;
         }
 
         public HttpResponse Login()
