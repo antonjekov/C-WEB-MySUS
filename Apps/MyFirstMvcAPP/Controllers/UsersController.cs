@@ -26,11 +26,8 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/users/login")]
-        public HttpResponse DoLogin()
-        {
-            //read data
-            var username = this.Request.FormData["username"];
-            var password = this.Request.FormData["password"];
+        public HttpResponse DoLogin(string username, string password)
+        {            
             //check user
             var user = this.usersService.GetUserId(username, password);
             if (user == null)
@@ -49,13 +46,9 @@ namespace BattleCards.Controllers
         }
 
         [HttpPost("/users/register")]
-        public HttpResponse DoRegister()
+        public HttpResponse DoRegister(string username, string password, string email, string confirmPassword)
         {
-            var username = this.Request.FormData["username"];
-            var password = this.Request.FormData["password"];
-            var email = this.Request.FormData["email"];
-            var confirmPassword = this.Request.FormData["confirmPassword"];
-
+           
             if (username==null||username.Length<5||username.Length>20)
             {
                 return this.Error("Username should be between 5 and 20 symbols.");

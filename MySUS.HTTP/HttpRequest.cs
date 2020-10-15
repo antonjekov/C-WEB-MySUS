@@ -35,6 +35,7 @@ namespace MySUS.HTTP
             this.Headers = new List<Header>();
             this.Cookies = new List<Cookie>();
             this.FormData = new Dictionary<string, string>();
+            this.QueryData = new Dictionary<string, string>();
 
             var lines = requestString.Split(new string[] { HttpConstants.NewLine }, StringSplitOptions.None);
 
@@ -48,7 +49,7 @@ namespace MySUS.HTTP
             int lineIndex = 1;
             StringBuilder bodyLines = new StringBuilder();
 
-            while (lineIndex<lines.Length)
+            while (lineIndex < lines.Length)
             {
                 var currentLine = lines[lineIndex];
                 lineIndex++;
@@ -61,15 +62,15 @@ namespace MySUS.HTTP
 
                 if (isInHeaders)
                 {
-                    var newHeader = new Header(currentLine);                    
+                    var newHeader = new Header(currentLine);
                     this.Headers.Add(newHeader);
                 }
                 else
                 {
                     bodyLines.AppendLine(currentLine);
-                }                
+                }
             }
-            if (this.Headers.Any(h=> h.Name.Equals(HttpConstants.RequestCookieHeader,StringComparison.OrdinalIgnoreCase)))
+            if (this.Headers.Any(h => h.Name.Equals(HttpConstants.RequestCookieHeader, StringComparison.OrdinalIgnoreCase)))
             {
                 var cookiesAsString = this.Headers
                     .FirstOrDefault(h => h.Name.Equals(HttpConstants.RequestCookieHeader, StringComparison.OrdinalIgnoreCase))
@@ -77,13 +78,13 @@ namespace MySUS.HTTP
                 var cookies = cookiesAsString.Split(new string[] { "; " }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var cookie in cookies)
                 {
-                    
+
                     this.Cookies.Add(new Cookie(cookie));
                 }
             }
 
             var sessionCookie = this.Cookies.FirstOrDefault(cookie => cookie.Name == HttpConstants.SessionCookieName);
-            if (sessionCookie==null)
+            if (sessionCookie == null)
             {
                 var sessionId = Guid.NewGuid().ToString();
                 this.Session = new Dictionary<string, string>();
@@ -100,24 +101,42 @@ namespace MySUS.HTTP
                 this.Session = Sessions[sessionCookie.Value];
             }
 
+            if (this.Path.Contains("?"))
+            {
+                var pathParts = this.Path.Split(new char[] { '?' }, 2);
+                this.Path = pathParts[0];
+                this.QueryString = pathParts[1];
+            }
+            else
+            {
+                this.QueryString = string.Empty;
+            }
 
             this.Body = bodyLines.ToString().TrimEnd('\n', '\r');
-            var parameters = this.Body.Split(new string[] { "&"},StringSplitOptions.RemoveEmptyEntries);
+            SplitParameters(this.Body,this.FormData);
+            SplitParameters(this.QueryString, this.QueryData);
+        }
+
+        private static void SplitParameters(string body, IDictionary<string, string> formData)
+        {
+            var parameters = body.Split(new string[] { "&" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var parameter in parameters)
             {
-                var parameterParts = parameter.Split(new[] { '=' },2);
+                var parameterParts = parameter.Split(new[] { '=' }, 2);
                 var name = parameterParts[0];
                 var value = WebUtility.UrlDecode(parameterParts[1]);
-                if (this.FormData.ContainsKey(name))
+                if (formData.ContainsKey(name))
                 {
-                    this.FormData[name] = value;
+                    formData[name] = value;
                     continue;
                 }
-                this.FormData.Add(name, value);
+                formData.Add(name, value);
             }
         }
 
         public string Path { get; set; }
+
+        public string QueryString { get; set; }
 
         public HttpMethod Method { get; set; }
 
@@ -130,5 +149,7 @@ namespace MySUS.HTTP
         public ICollection<Cookie> Cookies { get; set; }
 
         public IDictionary<string, string> FormData { get; set; }
+
+        public IDictionary<string, string> QueryData { get; set;  }
     }
 }
