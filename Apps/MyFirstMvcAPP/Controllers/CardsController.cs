@@ -1,5 +1,6 @@
 ﻿using BattleCards.Data;
 using BattleCards.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using MySUS.HTTP;
 using MySUS.MvcFramework;
 using System;
@@ -11,6 +12,13 @@ namespace BattleCards.Controllers
 {
     public class CardsController : Controller
     {
+        private ApplicationDbContext db;
+
+        public CardsController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         public HttpResponse Add()
         {
             if (!this.IsUserSignedIn())
@@ -23,7 +31,7 @@ namespace BattleCards.Controllers
         [HttpPost("/Cards/Add")]
         public HttpResponse DoAdd()
         {
-            var dbContext = new ApplicationDbContext();
+            
 
             if (this.Request.FormData["name"].Length < 5)
             {
@@ -31,7 +39,7 @@ namespace BattleCards.Controllers
             }
             
 
-            dbContext.Cards.Add(new Card
+            this.db.Cards.Add(new Card
             {
                 Attack = int.Parse(this.Request.FormData["attack"]),
                 Health = int.Parse(this.Request.FormData["health"]),
@@ -41,7 +49,7 @@ namespace BattleCards.Controllers
                 Keyword = this.Request.FormData["keyword"]                
             });
           
-            dbContext.SaveChanges();
+            this.db.SaveChanges();
 
             return this.Redirect("/cards/all");
         }
@@ -52,8 +60,7 @@ namespace BattleCards.Controllers
             {
                 return this.Redirect("/users/login");
             }
-            var db = new ApplicationDbContext();
-            var cardsViewModel = db.Cards.Select(x => new CardViewModel
+            var cardsViewModel = this.db.Cards.Select(x => new CardViewModel
             {
                 Attack = x.Attack,
                 Description=x.Description,
