@@ -13,6 +13,12 @@ namespace BattleCards.Data
 
     public class UserCard
     {
+        public UserCard(string userId, int cardId)
+        {
+            this.UserId = userId;
+            this.CardId = cardId;
+        }
+
         [Required]
         public string UserId { get; set; }
         public virtual User User { get; set; }
