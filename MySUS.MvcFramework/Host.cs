@@ -23,12 +23,13 @@ namespace MySUS.MvcFramework
             AutoRegisterStaticFiles(routingTable);
             AutoRegisterRoutes(routingTable, application,serviceCollection);
 
-            Console.WriteLine("All registered routes:");
+            Console.WriteLine("Registered routes:");
             foreach (var route in routingTable)
             {
                 Console.WriteLine($"{route.Method} {route.Path}");
             }
-
+            Console.WriteLine();
+            Console.WriteLine("Requests:");
             IHttpServer server = new HttpServer(routingTable);
 
             await server.StartAsync(port);
@@ -75,7 +76,22 @@ namespace MySUS.MvcFramework
             var parameters = action.GetParameters();
             foreach (var parameter in parameters)
             {
-                var parameterValue = GetParameterFromRequest(request, parameter.Name);
+                var httpParameterValue = GetParameterFromRequest(request, parameter.Name);
+                var parameterValue = Convert.ChangeType(httpParameterValue, parameter.ParameterType);
+                if (parameterValue == null &&
+                    parameter.ParameterType != typeof(string)
+                    && parameter.ParameterType != typeof(int?))
+                {
+                    // complex type
+                    parameterValue = Activator.CreateInstance(parameter.ParameterType);
+                    var properties = parameter.ParameterType.GetProperties();
+                    foreach (var property in properties)
+                    {
+                        var propertyHttpParamerValue = GetParameterFromRequest(request, property.Name);
+                        var propertyParameterValue = Convert.ChangeType(propertyHttpParamerValue, property.PropertyType);
+                        property.SetValue(parameterValue, propertyParameterValue);
+                    }
+                }
                 arguments.Add(parameterValue);
             }
 
@@ -85,13 +101,14 @@ namespace MySUS.MvcFramework
 
         private static string GetParameterFromRequest(HttpRequest request, string parameterName)
         {
-            if (request.FormData.ContainsKey(parameterName))
+            parameterName = parameterName.ToLower();
+            if (request.FormData.Any(x=>x.Key.ToLower()==parameterName))
             {
-                return request.FormData[parameterName];
+                return request.FormData.FirstOrDefault(x => x.Key.ToLower() == parameterName).Value;
             }
-            if (request.QueryData.ContainsKey(parameterName))
+            if (request.QueryData.Any(x=>x.Key.ToLower()==parameterName))
             {
-                return request.QueryData[parameterName];
+                return request.QueryData.FirstOrDefault(x => x.Key.ToLower() == parameterName).Value;
             }
             return null;
         }

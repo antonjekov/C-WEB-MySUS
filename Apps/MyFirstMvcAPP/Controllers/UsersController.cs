@@ -25,8 +25,8 @@ namespace BattleCards.Controllers
             return this.View();
         }
 
-        [HttpPost("/users/login")]
-        public HttpResponse DoLogin(string username, string password)
+        [HttpPost]
+        public HttpResponse Login(string username, string password)
         {            
             //check user
             var user = this.usersService.GetUserId(username, password);
@@ -45,8 +45,8 @@ namespace BattleCards.Controllers
             return this.View();            
         }
 
-        [HttpPost("/users/register")]
-        public HttpResponse DoRegister(string username, string password, string email, string confirmPassword)
+        [HttpPost]
+        public HttpResponse Register(string username, string password, string email, string confirmPassword)
         {
            
             if (username==null||username.Length<5||username.Length>20)
