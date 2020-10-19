@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SharedTrip.Data
@@ -20,7 +21,16 @@ namespace SharedTrip.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserTrip>()
+                .HasKey(ut => new { ut.TripId, ut.UserId });
+
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Trip> Trips { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserTrip> UserTrips { get; set; }
     }
 }
