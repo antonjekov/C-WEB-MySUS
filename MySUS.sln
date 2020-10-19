@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySUS.MvcFramework.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Suls", "Apps\Suls\Suls.csproj", "{E8FE03C4-33E8-4B90-A6A6-D0A86573A367}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedTrip", "SharedTrip\SharedTrip.csproj", "{106A7A8E-C9E1-4FD8-9BF6-F0F1C3488BB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedTrip", "Apps\SharedTrip\SharedTrip.csproj", "{106A7A8E-C9E1-4FD8-9BF6-F0F1C3488BB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
