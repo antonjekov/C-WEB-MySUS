@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace SharedTrip.Services
 {
@@ -35,20 +34,13 @@ namespace SharedTrip.Services
             return trip.Id;
         }
 
-        public IEnumerable<Trip> GetAllTrips()
-        {
-            return this.db.Trips.ToList();   
-        }
-
-        public Trip GetTripById(string tripId)
-        {
-            return this.db.Trips.FirstOrDefault(x => x.Id == tripId);
-        }
-
+        public IEnumerable<Trip> GetAllTrips() => this.db.Trips.ToList();
+        
+        public Trip GetTripById(string tripId) => this.db.Trips.FirstOrDefault(x => x.Id == tripId);
+        
         public bool TripHaveFreeSeats(string tripId)
         {
-            var trip = this.db.Trips
-            .FirstOrDefault(trip => trip.Id == tripId);
+            var trip = this.db.Trips.FirstOrDefault(trip => trip.Id == tripId);
             if (trip != null && trip.Seats-this.userTripService.GetCountOfTripOcupiedSeats(tripId) > 0)
             {
                 return true;

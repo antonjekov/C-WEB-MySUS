@@ -3,9 +3,7 @@ using MySUS.HTTP;
 using MySUS.MvcFramework;
 using SharedTrip.Data;
 using SharedTrip.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SharedTrip
 {

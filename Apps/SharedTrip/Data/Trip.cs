@@ -5,15 +5,6 @@ using System.Text;
 
 namespace SharedTrip.Data
 {
-//    •	Has an Id – a string, Primary Key
-//•	Has a StartPoint – a string (required)
-//•	Has a EndPoint – a string (required)
-//•	Has a DepartureTime – a datetime(required) (use format: "dd.MM.yyyy HH:mm")
-//•	Has a Seats – an integer with min value 2 and max value 6 (required)
-//•	Has a Description – a string with max length 80 (required)
-//•	Has a ImagePath – a string
-//•	Has UserTrips collection – a UserTrip type
-
     public class Trip
     {
         public Trip()

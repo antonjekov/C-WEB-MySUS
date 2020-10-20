@@ -1,10 +1,7 @@
 ﻿using MySUS.HTTP;
 using MySUS.MvcFramework;
 using SharedTrip.Services;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace SharedTrip.Controllers
 {

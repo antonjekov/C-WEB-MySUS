@@ -3,8 +3,6 @@ using MySUS.MvcFramework;
 using SharedTrip.Services;
 using SharedTrip.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
 
@@ -128,7 +126,7 @@ namespace SharedTrip.Controllers
             }
             if (!this.tripsService.TripHaveFreeSeats(tripId))
             {
-                return this.Error("All the seats for this treap are occupied");
+                return this.Error("All the seats for this trip are occupied");
             }
             this.userTripService.Add(this.GetUserId(), tripId);
             return this.Redirect("/Trips/All");

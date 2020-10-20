@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SharedTrip.ViewModels
+﻿namespace SharedTrip.ViewModels
 {
     public class TripInputModel
     {
